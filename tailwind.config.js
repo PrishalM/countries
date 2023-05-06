@@ -10,6 +10,8 @@ module.exports = {
       dropShadow: {
         dark: "0px 0px 5px rgba(17, 21, 23, 0.25)",
         light: "0px 0px 5px rgba(133, 133, 133, 0.25)",
+        darkCountryCard: "0px 0px 5px rgb(255 255 255 / 0.50)",
+        lightCountryCard: "0px 0px 5px rgb(0 0 0 / 0.50)",
       },
       colors: {
         darkBG: "#202c37",

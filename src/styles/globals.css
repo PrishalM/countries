@@ -41,3 +41,7 @@ select {
   position: relative !important;
   object-fit: cover !important;
 }
+
+.relative {
+  position: relative !important;
+}
