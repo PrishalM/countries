@@ -16,19 +16,30 @@ import { getAllCountryIds, getCountryData } from "../lib/country";
 export default function Country({ countryData }) {
   const country = JSON.parse(countryData);
   let currencies;
-  const currenciesObj = Object.values(country.currencies);
-  currencies = currenciesObj[0].name;
-  if (currenciesObj.length > 1) {
-    console.log("more than 1");
-    for (let i = 1; i < currenciesObj.length; i++) {
-      currencies = currencies + ", " + currenciesObj[i].name;
+  if (country.currencies) {
+    const currenciesObj = Object.values(country.currencies);
+    currencies = currenciesObj[0].name;
+    if (currenciesObj.length > 1) {
+      for (let i = 1; i < currenciesObj.length; i++) {
+        currencies = currencies + ", " + currenciesObj[i].name;
+      }
+    }
+  }
+  let languages;
+  if (country.languages) {
+    const languagesObj = Object.values(country.languages);
+    languages = languagesObj[0];
+    if (languagesObj.length > 1) {
+      for (let i = 1; i < languagesObj.length; i++) {
+        languages = languages + ", " + languagesObj[i];
+      }
     }
   }
 
   return (
     <>
       <Head>
-        <title>{country.name.common} - Countries</title>
+        <title>{JSON.stringify(country.name.common)} - Countries</title>
       </Head>
       {/* Main Body */}
       <div className="container py-10 mx-auto px-10">
@@ -56,18 +67,23 @@ export default function Country({ countryData }) {
           <div className="">
             <h1 className="font-bold text-xl py-5">{country.name.official}</h1>
             <div className="[&>*]:py-2">
-              <p>
-                <span className="font-semibold">Native name:</span>{" "}
-                {Object.values(country.name.nativeName)[0].official}
-              </p>
+              {country.name.nativeName && (
+                <p>
+                  <span className="font-semibold">Native name:</span>{" "}
+                  {Object.values(country.name.nativeName)[0].official}
+                </p>
+              )}
+
               <p>
                 <span className="font-semibold">Population:</span>{" "}
                 {country.population.toLocaleString("en-US")}
               </p>
-              <p>
-                <span className="font-semibold">Sub Region: </span>
-                {country.subregion}
-              </p>
+              {country.subregion && (
+                <p>
+                  <span className="font-semibold">Sub Region: </span>
+                  {country.subregion}
+                </p>
+              )}
               <p>
                 <span className="font-semibold">Region: </span>
 
@@ -86,16 +102,17 @@ export default function Country({ countryData }) {
                 <span className="font-semibold">Top Level domain:</span>{" "}
                 {country.tld}
               </p>
-              <p>
-                <span className="font-semibold">Currencies: </span>
-
-                {currencies}
-              </p>
-
-              <p>
-                <span className="font-semibold">Languages:</span>{" "}
-                {country.capital}
-              </p>
+              {country.currencies ? (
+                <p>
+                  <span className="font-semibold">Currencies: </span>
+                  {currencies}
+                </p>
+              ) : null}
+              {country.languages ? (
+                <p>
+                  <span className="font-semibold">Languages:</span> {languages}
+                </p>
+              ) : null}
             </div>
           </div>
         </div>
