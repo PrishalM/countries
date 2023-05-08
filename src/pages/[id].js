@@ -11,10 +11,16 @@ const nunito_sans = Nunito_Sans({
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 
-import { getAllCountryIds, getCountryData } from "../lib/country";
+import {
+  getAllCountryIds,
+  getCountryData,
+  getBorderCountriesData,
+} from "../lib/country";
 
-export default function Country({ countryData }) {
+export default function Country({ countryData, borderCountriesData }) {
   const country = JSON.parse(countryData);
+  const borders = JSON.parse(borderCountriesData);
+
   let currencies;
   if (country.currencies) {
     const currenciesObj = Object.values(country.currencies);
@@ -39,7 +45,8 @@ export default function Country({ countryData }) {
   return (
     <>
       <Head>
-        <title>{JSON.stringify(country.name.common)} - Countries</title>
+        <title>{`${country.name.common} - Countries`}</title>
+        <link rel="icon" type="image/x-icon" href="/countries.png"></link>
       </Head>
       {/* Main Body */}
       <div className="container py-10 mx-auto px-10">
@@ -55,67 +62,95 @@ export default function Country({ countryData }) {
 
         {/* Country data */}
         <div
-          className={`${nunito_sans.className} text-lightText dark:text-darkText`}
+          className={`${nunito_sans.className} text-lightText dark:text-darkText flex flex-col lg:flex-row lg:pt-10 lg:justify-between`}
         >
-          <Image
-            src={country.flags.png}
-            alt={`${country.name.common}'s flag`}
-            fill
-            className="relative py-8"
-          />
+          <div className="w-full lg:w-5/12">
+            <Image
+              src={country.flags.png}
+              alt={`${country.name.common}'s flag`}
+              fill
+              className="relative py-8 lg:py-0 h-auto"
+            />
+          </div>
 
-          <div className="">
-            <h1 className="font-bold text-xl py-5">{country.name.official}</h1>
-            <div className="[&>*]:py-2">
-              {country.name.nativeName && (
+          <div className="lg:w-6/12 lg:flex lg:flex-col lg:justify-center">
+            <h1 className="font-bold  text-3xl lg:text-4xl py-5 lg:pt-0">
+              {country.name.official}
+            </h1>
+            <div className="flex flex-col lg:flex-row ">
+              <div className="[&>*]:py-2 lg:pr-5">
+                {country.name.nativeName && (
+                  <p>
+                    <span className="font-semibold">Native name:</span>{" "}
+                    {Object.values(country.name.nativeName)[0].official}
+                  </p>
+                )}
+
                 <p>
-                  <span className="font-semibold">Native name:</span>{" "}
-                  {Object.values(country.name.nativeName)[0].official}
+                  <span className="font-semibold">Population:</span>{" "}
+                  {country.population.toLocaleString("en-US")}
                 </p>
-              )}
-
-              <p>
-                <span className="font-semibold">Population:</span>{" "}
-                {country.population.toLocaleString("en-US")}
-              </p>
-              {country.subregion && (
+                {country.subregion && (
+                  <p>
+                    <span className="font-semibold">Sub Region: </span>
+                    {country.subregion}
+                  </p>
+                )}
                 <p>
-                  <span className="font-semibold">Sub Region: </span>
-                  {country.subregion}
-                </p>
-              )}
-              <p>
-                <span className="font-semibold">Region: </span>
+                  <span className="font-semibold">Region: </span>
 
-                {country.region}
-              </p>
-
-              {country.capital ? (
-                <p>
-                  <span className="font-semibold">Capital:</span>{" "}
-                  {country.capital}
+                  {country.region}
                 </p>
-              ) : null}
+
+                {country.capital ? (
+                  <p>
+                    <span className="font-semibold">Capital:</span>{" "}
+                    {country.capital}
+                  </p>
+                ) : null}
+              </div>
+              <div className="[&>*]:py-2 pt-10 lg:pt-0">
+                {country.tdl ? (
+                  <p>
+                    <span className="font-semibold">Top Level domain:</span>{" "}
+                    {country.tld}
+                  </p>
+                ) : null}
+
+                {country.currencies ? (
+                  <p>
+                    <span className="font-semibold">Currencies: </span>
+                    {currencies}
+                  </p>
+                ) : null}
+                {country.languages ? (
+                  <p>
+                    <span className="font-semibold">Languages:</span>{" "}
+                    {languages}
+                  </p>
+                ) : null}
+              </div>
             </div>
-            <div className="[&>*]:py-2 pt-10">
-              <p>
-                <span className="font-semibold">Top Level domain:</span>{" "}
-                {country.tld}
-              </p>
-              {country.currencies ? (
-                <p>
-                  <span className="font-semibold">Currencies: </span>
-                  {currencies}
-                </p>
-              ) : null}
-              {country.languages ? (
-                <p>
-                  <span className="font-semibold">Languages:</span> {languages}
-                </p>
-              ) : null}
-            </div>
+            {/* Borders */}
+            {country.borders ? (
+              <div className="pt-10">
+                <p className="font-semibold text-xl">Border Countries: </p>
+                <div className="flex pt-5 flex-wrap justify-start gap-4">
+                  {borders.map((border, i) => (
+                    <Link key={i} href={`/${border.id}`}>
+                      <p className="px-6 py-1.5 bg-lightElement dark:bg-darkElement drop-shadow-light dark:drop-shadow-dark rounded-sm text-lightText dark:text-darkText hover:bg-darkElement dark:hover:bg-lightElement hover:text-darkText dark:hover:text-lightText">
+                        {border.name}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
+
+        {/* Spacing */}
+        <div className="lg:h-96"></div>
       </div>
     </>
   );
@@ -130,11 +165,16 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const data = await getCountryData(params.id);
-  const countryData = JSON.stringify(data);
+  const countryRawData = await getCountryData(params.id);
+  const countryData = JSON.stringify(countryRawData);
+
+  const borderCountriesRawData = await getBorderCountriesData(params.id);
+  const borderCountriesData = JSON.stringify(borderCountriesRawData);
+
   return {
     props: {
-      countryData,
+      countryData: countryData,
+      borderCountriesData: borderCountriesData,
     },
   };
 }

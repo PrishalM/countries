@@ -72,6 +72,7 @@ export default function Home() {
     <>
       <Head>
         <title>Countries</title>
+        <link rel="icon" type="image/x-icon" href="/countries.png"></link>
       </Head>
 
       {/* Main Body */}
@@ -185,6 +186,8 @@ export default function Home() {
             </Link>
           ))}
         </div>
+        {/* Spacing */}
+        <div className="h-96"></div>
       </div>
     </>
   );
