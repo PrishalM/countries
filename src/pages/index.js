@@ -102,7 +102,7 @@ export default function Home() {
               >
                 <FontAwesomeIcon
                   icon={faMagnifyingGlass}
-                  className="[&>*]:text-lightInputText dark:text-darkInputText"
+                  className="[&>*]:text-lightInputText dark:text-darkInputText icon"
                 />
               </button>
             </div>
@@ -138,7 +138,7 @@ export default function Home() {
               <div className="absolute right-0 top-0 mr-5 flex h-full items-center">
                 <FontAwesomeIcon
                   icon={faChevronDown}
-                  className="[&>*]:text-lightInputText dark:text-darkInputText"
+                  className="[&>*]:text-lightInputText dark:text-darkInputText icon"
                 />
               </div>
             </div>

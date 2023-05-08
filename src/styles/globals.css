@@ -49,3 +49,8 @@ select {
 .h-auto {
   height: auto !important;
 }
+
+.icon {
+  height: 1em;
+  box-sizing: content-box;
+}

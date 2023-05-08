@@ -66,7 +66,10 @@ export default function Layout({ children }) {
             </Link>
             <div className="flex items-center">
               <button className="flex flex-row " ref={darkModeBtn}>
-                <FontAwesomeIcon icon={faCircleHalfStroke} className="pt-0.5" />
+                <FontAwesomeIcon
+                  icon={faCircleHalfStroke}
+                  className="pt-0.5 icon"
+                />
                 <p
                   className={`${nunito_sans.className} text-sm pl-1 hover:underline hover:text-lightInputText dark:hover:text-lightInputText`}
                 >
@@ -74,7 +77,10 @@ export default function Layout({ children }) {
                 </p>
               </button>
               <button className="flex flex-row " ref={lightModeBtn}>
-                <FontAwesomeIcon icon={faCircleHalfStroke} className="pt-0.5" />
+                <FontAwesomeIcon
+                  icon={faCircleHalfStroke}
+                  className="pt-0.5 icon"
+                />
                 <p
                   className={`${nunito_sans.className} text-sm pl-1 hover:underline hover:text-lightInputText dark:hover:text-lightInputText`}
                 >
