@@ -53,8 +53,8 @@ export default function Country({ countryData, borderCountriesData }) {
         {/* Back Btn */}
         <div className="flex flex-start pb-5">
           <Link href="/">
-            <button className="px-10 py-2.5 bg-lightElement dark:bg-darkElement drop-shadow-light dark:drop-shadow-dark rounded-md text-lightText dark:text-darkText hover:bg-darkElement dark:hover:bg-lightElement hover:text-darkText dark:hover:text-lightText">
-              <FontAwesomeIcon icon={faArrowLeftLong} className="pr-2" />
+            <button className="px-10 py-2.5 bg-lightElement dark:bg-darkElement drop-shadow-light dark:drop-shadow-dark rounded-md flex items-center text-lightText dark:text-darkText hover:bg-darkElement dark:hover:bg-lightElement hover:text-darkText dark:hover:text-lightText">
+              <FontAwesomeIcon icon={faArrowLeftLong} className="pr-2 icon" />
               Back
             </button>
           </Link>
